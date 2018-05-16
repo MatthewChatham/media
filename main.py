@@ -6,12 +6,12 @@ import numpy as np
 import os.path
 import os
 from argparse import ArgumentParser
+from sqlalchemy import create_engine
 
 PUBS = ['nyt', 'fox', 'wapo']
 NOW = dt.datetime.now().strftime('%Y%m%dT%H%M')
 
 parser = ArgumentParser()
-# TODO: arguments
 parser.add_argument(
     '-p', '--pub',
     default='all',
@@ -27,7 +27,6 @@ parser.add_argument(
 args = parser.parse_args()
 if args.pub != 'all' and args.file == 'all{}.csv'.format(NOW):
     args.file = args.pub + '{}.csv'
-    print(args.file)
 
 
 def fetch_foxnews():
@@ -103,7 +102,6 @@ def fetch_wapo():
 
 
 def main():
-
     # import pdb;pdb.set_trace()
 
     fetch_dict = {
@@ -123,8 +121,13 @@ def main():
 
     headlines['timestamp'] = NOW
 
-    headlines.to_csv(os.path.join(args.dir, args.file).format(NOW),
-                     index=False, encoding='utf-8')
+    if args.file != 'heroku':
+        headlines.to_csv(os.path.join(args.dir, args.file).format(NOW),
+                         index=False, encoding='utf-8')
+    else:
+        url = os.environ['DATABASE_URL']
+        engine = create_engine(url)
+        headlines.to_sql('headlines', engine, if_exists='append')
 
 
 if __name__ == '__main__':
