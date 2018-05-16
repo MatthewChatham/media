@@ -6,3 +6,5 @@ seaborn
 ipython
 jupyterlab
 psycopg2
+requests
+bs4
