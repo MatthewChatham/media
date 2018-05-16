@@ -8,3 +8,4 @@ jupyterlab
 psycopg2
 requests
 bs4
+lxml
