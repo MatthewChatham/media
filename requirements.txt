@@ -1,0 +1,11 @@
+sqlalchemy
+pandas
+numpy
+matplotlib
+seaborn
+ipython
+jupyterlab
+psycopg2
+requests
+bs4
+lxml
