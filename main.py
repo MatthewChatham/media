@@ -174,6 +174,7 @@ def main():
         mask = ~(headlines['headline'].isin(current['headline']) | ~(
             headlines['url'].isin(current['url'])))
         toappend = headlines.loc[mask]
+        toappend['timestamp'] = NOW
         logger.info(f'Loading {len(toappend)} to Heroku...')
         toappend.to_sql('headlines', engine, if_exists='append')
 
