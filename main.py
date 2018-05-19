@@ -98,7 +98,7 @@ def fetch_nytimes():
     logger.info('Extracting titles and urls...')
     headlines_df = pd.DataFrame(list(map(_extract, elements)))
     res = headlines_df.dropna().drop_duplicates()
-    logger.info(f"Scraped {len(res)} from NYTimes.com.")
+    logger.info(f"Scraped {len(res)} from NY Times.")
     return res
 
 
@@ -136,7 +136,7 @@ def fetch_wapo():
     logger.info('Extracting titles and urls...')
     headlines_df = pd.DataFrame(list(map(_extract, elements)))
     res = headlines_df.dropna().drop_duplicates()
-    logger.info(f'Scraped {len(res)} from NYTimes.com.')
+    logger.info(f'Scraped {len(res)} from Washington Post.')
     return res
 
 
@@ -171,9 +171,8 @@ def main():
         db_url = os.environ['DATABASE_URL']
         engine = create_engine(db_url)
         current = pd.read_sql_query('SELECT * FROM headlines;', engine)
-        mask = ~(headlines['headline'].isin(current['headline']) | ~(
-            headlines['url'].isin(current['url'])))
-        toappend = headlines.loc[mask]
+        in_current = headlines['headline'].isin(current['headline'])
+        toappend = headlines.loc[~in_current]
         if len(current) == 0:
             toappend = headlines
         toappend['timestamp'] = NOW
