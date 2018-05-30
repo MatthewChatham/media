@@ -168,7 +168,7 @@ def main():
         headlines.to_csv(os.path.join(args.dir, args.file).format(NOW),
                          index=False, encoding='utf-8')
     else:
-        db_url = os.environ['DATABASE_URL']
+        db_url = os.environ['HEROKU_POSTGRESQL_CHARCOAL_URL']
         engine = create_engine(db_url)
         current = pd.read_sql_query('SELECT * FROM headlines;', engine)
         in_current = headlines['headline'].isin(current['headline'])
