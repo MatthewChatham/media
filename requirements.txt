@@ -9,3 +9,9 @@ psycopg2
 requests
 bs4
 lxml
+dash
+dash-renderer
+dash-html-components
+dash-core-components
+plotly
+networkx==2.1
