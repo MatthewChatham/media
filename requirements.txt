@@ -5,7 +5,7 @@ matplotlib
 seaborn
 ipython
 jupyterlab
-psycopg2
+psycopg2-binary
 requests
 bs4
 lxml
@@ -15,3 +15,4 @@ dash-html-components
 dash-core-components
 plotly
 networkx==2.1
+gunicorn
